@@ -3,8 +3,9 @@ BOOKS=alice christmas_carol dracula frankenstein heart_of_darkness life_of_bee m
 NOMD=$(BOOKS:%=data/%.no_md.txt)
 FREQLISTS=$(BOOKS:%=results/%.freq.txt)
 SENTEDBOOKS=$(BOOKS:%=results/%.sent.txt)
+PARSEDBOOKS=$(BOOKS:%=results/%.parsed.txt)
 
-all: data/all.no_md.txt data/all.freq.txt data/all.sent.txt
+all: data/all.no_md.txt data/all.freq.txt data/all.sent.txt $(FREQLISTS) $(SENTEDBOOKS) $(PARSEDBOOKS)
 
 %.no_md.txt: %.txt
 	python3 src/remove_gutenberg_metadata.py $< $@
@@ -23,3 +24,6 @@ data/all.sent.txt: $(SENTEDBOOKS)
 
 data/all.no_md.txt: $(NOMD)
 	cat $^ > $@
+
+results/%.parsed.txt: results/%.sent.txt
+	cat $< > $@
