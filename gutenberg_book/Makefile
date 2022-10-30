@@ -4,7 +4,9 @@ NOMD=$(BOOKS:%=data/%.no_md.txt)
 FREQLISTS=$(BOOKS:%=results/%.freq.txt)
 SENTEDBOOKS=$(BOOKS:%=results/%.sent.txt)
 
-all: data/all.no_md.txt data/all.freq.txt data/all.sent.txt
+all: data/all.no_md.txt data/all.freq.txt data/all.sent.txt $(FREQLIST) $(SENTEDBOOKS)
+clean:
+	rm -f data/*no_md.txt results/*freq.txt results/*sent.txt
 
 %.no_md.txt: %.txt
 	python3 src/remove_gutenberg_metadata.py $< $@
